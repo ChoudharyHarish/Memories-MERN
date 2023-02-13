@@ -28,7 +28,7 @@ const Post = ({ post, currentId, setCurrentId }) => {
     const openPost = (e) => navigate(`/posts/${post._id}`)
 
 
-    const hasLikedPost = likes.find((id) => id === user.userId);
+    const hasLikedPost = likes.find((id) => id === user?.userId);
 
     const handleLikes = () => {
         dispatch(likePost(post._id))
