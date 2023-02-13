@@ -28,8 +28,8 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "env-cmd -f .env.Production react-scripts start",
-    "build:production": "env-cmd -f .env.production react-scripts build",
+   "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
