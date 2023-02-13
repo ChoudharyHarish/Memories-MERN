@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = process.env.REACT_APP_BASE_URL;
+const url = "https://memories-mern-server.vercel.app/";
 const Api = axios.create({ baseURL: url })   //benefit of using this we can define our headers here now only no need of adding them in each request;
 // setting headers for every request if we have profile in our local storage 
 
