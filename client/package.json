@@ -2,7 +2,7 @@
   "name": "mern-stack-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "${process.env.REACT_APP_BASE_URL}" ,
   "dependencies": {
     "@material-ui/core": "^4.9.10",
     "@material-ui/icons": "^4.9.1",
@@ -13,6 +13,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "env-cmd": "^10.1.0",
     "jwt-decode": "^3.1.2",
     "material-ui-chip-input": "^2.0.0-beta.2",
     "moment": "^2.27.0",
@@ -27,8 +28,8 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "env-cmd -f .env.Production react-scripts start",
+    "build:production": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

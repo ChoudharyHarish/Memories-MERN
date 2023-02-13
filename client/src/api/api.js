@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = "http://localhost:5000";
+const url = process.env.REACT_APP_BASE_URL;
 const Api = axios.create({ baseURL: url })   //benefit of using this we can define our headers here now only no need of adding them in each request;
 // setting headers for every request if we have profile in our local storage 
 
