@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login';
+// import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import Icon from './Icon';
@@ -11,6 +12,7 @@ import Input from './Input';
 
 import { googleLogin } from '../../redux/authSlice';
 import { signUp, logIn } from '../../redux/authSlice';
+import decode from 'jwt-decode';
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
@@ -41,9 +43,10 @@ const Auth = () => {
         navigate("/");
     };
 
+
     const googleSuccess = async (res) => {
-        const result = res?.profileObj;
-        const token = res?.tokenId;
+        const token = res?.credential;
+        const result = decode(token);
         try {
             dispatch(googleLogin({ result, token }));
             navigate("/");
@@ -52,7 +55,14 @@ const Auth = () => {
         }
     };
 
-    const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
+    const googleError = (error) => console.log('Google Sign In was unsuccessful. Try again later');
+
+    const login = useGoogleLogin({
+        onSuccess: tokenResponse => googleSuccess(tokenResponse),
+        onError: error => googleError(error)
+    });
+
+
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -78,7 +88,7 @@ const Auth = () => {
                     <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
-                    <GoogleLogin
+                    {/* <GoogleLogin
                         clientId="564033717568-bu2nr1l9h31bhk9bff4pqbenvvoju3oq.apps.googleusercontent.com"
                         render={(renderProps) => (
                             <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
@@ -88,7 +98,19 @@ const Auth = () => {
                         onSuccess={googleSuccess}
                         onFailure={googleError}
                         cookiePolicy="single_host_origin"
+                    /> */}
+
+                    <GoogleLogin
+                        onSuccess={(credentialResponse) => {
+                            googleSuccess(credentialResponse);
+                        }}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
                     />
+                    {/* <Button onClick={() => login()}>
+                        <Icon/>  Sign in with Google
+                    </Button> */}
                     <Grid container justifyContent="flex-end">
                         <Grid item>
                             <Button onClick={switchMode}>

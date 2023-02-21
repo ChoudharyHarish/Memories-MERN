@@ -34,9 +34,9 @@ const authSlice = createSlice({
         googleLogin: (state, action) => {
             const { result, token } = action.payload
             state.user = {
-                imageUrl: result.imageUrl,
-                name: result.givenName,
-                userId: result.googleId
+                imageUrl: result.picture,
+                name: result.given_name,
+                userId: result.sub
             }
             localStorage.setItem('profile', token)
             localStorage.setItem('user', JSON.stringify({ ...state.user }))

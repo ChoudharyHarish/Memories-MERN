@@ -17,7 +17,6 @@ function Navbar() {
 
     // let user = JSON.parse(localStorage.getItem('user'));
     const user = useSelector((state) => state.auth.user) || JSON.parse(localStorage.getItem('user'));
-    console.log(user);
 
     useEffect(() => {
         const token = localStorage.getItem('profile');
